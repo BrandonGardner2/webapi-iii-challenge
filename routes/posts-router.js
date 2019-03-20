@@ -1,5 +1,7 @@
 const express = require("express");
 
-const postsRouter = express.Router();
+const db = require("../data/helpers/postDb");
 
-module.exports = postsRouter;
+const router = express.Router();
+
+module.exports = router;
