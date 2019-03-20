@@ -75,11 +75,26 @@ router.delete("/:id", async (req, res) => {
       res.status(404).json({ message: "The user could not be located." });
     }
   } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong while trying to delete the user."
+    });
+  }
+});
+
+router.get("/:id/posts", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const posts = await db.getUserPosts(id);
+    if (posts) {
+      res.status(200).json(posts);
+    } else {
+      res.status(404).json({ message: "The user posts could not be located." });
+    }
+  } catch (error) {
     res
       .status(500)
-      .json({
-        message: "Something went wrong while trying to delete the user."
-      });
+      .json({ message: "Something went wrong fetching the user posts." });
   }
 });
 
