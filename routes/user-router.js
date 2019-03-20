@@ -50,18 +50,20 @@ router.put("/:id", async (req, res) => {
   if (name) {
     try {
       const count = await db.update(id, req.body);
-      res.status(200).json(count);
+      if (count) {
+        res.status(200).json(count);
+      } else {
+        res.status(404).json({ message: "The user could not be located." });
+      }
     } catch (error) {
-      res.status(404).json({ message: "The user could not be located." });
+      res
+        .status(500)
+        .json({ message: "Something went wrong trying to update the user." });
     }
-  } else if (!name) {
+  } else {
     res
       .status(400)
       .json({ message: "Please provide an updated name for the user." });
-  } else {
-    res
-      .status(500)
-      .json({ message: "Something went wrong trying to update the user." });
   }
 });
 
