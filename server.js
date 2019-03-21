@@ -1,4 +1,6 @@
 const express = require("express");
+const helmet = require("helmet");
+
 const server = express();
 
 const userRouter = require("./routes/user-router");
@@ -12,6 +14,7 @@ function upperCaseName(req, res, next) {
   next();
 }
 
+server.use(helmet());
 server.use(express.json());
 server.use(upperCaseName);
 
